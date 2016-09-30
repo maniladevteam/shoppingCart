@@ -70,7 +70,7 @@ public class Cart {
 		for (ProductEnum product : items.keySet()) {
 		
 			
-			sb.append(items.get(product) + " x " + product + " " + product.Getprice()
+			sb.append(items.get(product) + " x " + product + " "
 					+ System.getProperty("line.separator"));
 			this.total = total.add(new BigDecimal(ApplyDiscount(product, items.get(product)).toString()));
 		}
