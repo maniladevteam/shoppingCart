@@ -9,12 +9,12 @@ import java.util.Map;
 import com.exam.products.ProductEnum;
 
 public class Cart {
-	private BigInteger pricingScheme = new BigInteger("0");
+	private BigDecimal pricingScheme = new BigDecimal("0.00");
 	public final HashMap<ProductEnum, Integer> items = new HashMap<>();
 	private boolean promoCode = false;
 	public BigDecimal total = new BigDecimal("0.00");
 	public Cart(String pricingScheme) {
-		this.pricingScheme = new BigInteger(pricingScheme);
+		this.pricingScheme = new BigDecimal(pricingScheme);
 	}
 
 	private BigDecimal ApplyDiscount(ProductEnum productCode, int numberOfItems) {
@@ -32,7 +32,9 @@ public class Cart {
 		}
 		
 		newTotal = (productCode.Getprice() * numberOfItems) - (large_discount-small_discount);
-		
+		if(this.promoCode){
+			newTotal = newTotal * .90;
+		}
 		return new BigDecimal(newTotal.toString()).setScale(2,2);
 		
 	}
@@ -55,6 +57,7 @@ public class Cart {
 			throw new RuntimeException(promoCode + " is not a valid promocode!!");
 		}
 		this.promoCode = true;
+		
 		this.Add(product);
 
 	}
@@ -72,7 +75,7 @@ public class Cart {
 			
 			sb.append(items.get(product) + " x " + product + " "
 					+ System.getProperty("line.separator"));
-			this.total = total.add(new BigDecimal(ApplyDiscount(product, items.get(product)).toString()));
+			this.total = total.add(new BigDecimal(ApplyDiscount(product, items.get(product)).toString()).add(pricingScheme));
 		}
 		return sb.toString();
 		
