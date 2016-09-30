@@ -14,7 +14,7 @@ public class ConsoleRunner {
 		System.out.println(cart);
 		System.out.println(cart.total);
 		System.out.println(cart.items);
-		
+		  
 	}
   
 }
